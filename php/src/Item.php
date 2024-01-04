@@ -7,17 +7,17 @@ namespace GildedRose;
 class Item implements \Stringable
 {
     public string $name;
-    public int $sellIn;
-    public int $quality;
+    public int $ammount;
+    public int $price;
     
-    public function __construct($name, $sellIn, $quality) {
+    public function __construct($name, $ammount, $price) {
         $this->name = $name;
-        $this->sellIn = $sellIn;
-        $this->quality = $quality;
+        $this->ammount = $ammount;
+        $this->price = $price;
     }
 
     public function __toString(): string
     {
-        return (string) "{$this->name}, {$this->sellIn}, {$this->quality}";
+        return (string) "{$this->name}, {$this->ammount}, {$this->price}";
     }
 }

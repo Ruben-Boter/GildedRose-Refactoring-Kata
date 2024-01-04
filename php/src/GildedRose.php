@@ -14,55 +14,60 @@ final class GildedRose
     ) {
     }
 
+    // $price is prijs waard
+    // $ammount is hoeveelheid beschikbaar
+    // wanneer $item price is minder dan 0 dan gaat de prijs 2x zo snel naar beneden
+    // de price van een $item is niet minder dan 0
+    // "Aged Brie"  wanneer de price meer wordt ga je er meer voor moeten betalen
+    // De price is nooit meer dan 50
+    // "Sulfras" hoeft nooit verkocht te worden of in price verminderen
+    // "Backstage passes" wordt meer in bedrag wanneer er minder kaarten over zijn
+    // de price wordt meer wanneer er minder dagen over zijn wanneer nog 10 dagen wordt de price per 2 toegevoegd en bij 5 dagen wordt de price per 3 toegevoegd
+    // de price wordt 0 na het concert
+
+    // "Conjured" gaat 2x zo snel in prijs naar beneden als gewoonlijk
+
     public function updateQuality(): void
     {
-        foreach ($this->items as $item) {
-            
-            if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if ($item->quality > 0) {
-                    if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                        $item->quality = $item->quality - 1;
-                    }
+        foreach ($this->items as $i) {
+
+            if ($i->name != 'Aged Brie' && $i->name != 'Backstage passes to a TAFKAL80ETC concert') {
+                if ($i->price > 0 && $i->name != 'Sulfuras, Hand of Ragnaros') {
+                    $i->price--;
                 }
             } else {
-                if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
-                    if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->sellIn < 11) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
+                if ($i->price < 50) {
+                    $i->price++;
+                    if ($i->name == 'Backstage passes to a TAFKAL80ETC concert' && $i->ammount < 11) {
+                        if ($i->price < 50) {
+                            $i->price++;
                         }
-                        if ($item->sellIn < 6) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
+                        if ($i->ammount < 6 && $i->price < 50) {
+                            $i->price++;
                         }
                     }
                 }
             }
 
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-            $item->sellIn = $item->sellIn - 1;
-        }
-
-        if ($item->sellIn < 0) {
-            if ($item->name != 'Aged Brie') {
-                if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                    if ($item->quality > 0) {
-                        if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                            $item->quality = max(0, $item->quality - 1);
-                        }
-                    }
-                } else {
-                    $item->quality = 0;
-                }
-            } else {
-                if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
-                }
+            if ($i->name != 'Sulfuras, Hand of Ragnaros') {
+                $i->ammount--;
             }
-        }
+
+            if ($i->ammount < 0) {
+                if ($i->name != 'Aged Brie') {
+                    if ($i->name != 'Backstage passes to a TAFKAL80ETC concert') {
+                        if ($i->price > 0 && $i->name != 'Sulfuras, Hand of Ragnaros') {
+                            $i->price = max(0, $i->price--);
+                        }
+                    } else {
+                        $i->price = 0;
+                    }
+                } else{
+                    if ($i->price < 50) {
+                        $i->price++;
+                    }
+                } 
+            }
         }
     }
 }
