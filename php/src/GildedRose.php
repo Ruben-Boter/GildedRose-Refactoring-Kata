@@ -32,7 +32,9 @@ final class GildedRose
         foreach ($this->items as $i) {
 
             if ($i->name != 'Aged Brie' && $i->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if ($i->price > 0 && $i->name != 'Sulfuras, Hand of Ragnaros') {
+                if ($i->price > 0 && $i->name == "Conjured Mana Cake") {
+                    $i->price -= 2;
+                } else if ($i->price > 0 && $i->name != 'Sulfuras, Hand of Ragnaros') {
                     $i->price--;
                 }
             } else {
@@ -62,11 +64,11 @@ final class GildedRose
                     } else {
                         $i->price = 0;
                     }
-                } else{
+                } else {
                     if ($i->price < 50) {
                         $i->price++;
                     }
-                } 
+                }
             }
         }
     }
